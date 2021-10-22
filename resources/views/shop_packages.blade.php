@@ -8,93 +8,95 @@
 
 @section('content')
 
-
     <main class="d-flex align-items-center">
         <div class="container">
             <div id="wizard">
-                <h3>Step 1 Title</h3>
+                <h3></h3>
                 <section>
                     <h5 class="bd-wizard-step-title">Step 1</h5>
-                    <h2 class="section-heading">Select business type </h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                        et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.</p>
-                    <div class="purpose-radios-wrapper">
-                        <div class="purpose-radio">
-                            <input type="radio" name="purpose" id="branding" class="purpose-radio-input" value="Branding"
-                                checked>
-                            <label for="branding" class="purpose-radio-label">
-                                <span class="label-icon">
-                                    <img src="assets/images/icon_branding.svg" alt="branding" class="label-icon-default">
-                                    <img src="assets/images/icon_branding_green.svg" alt="branding"
-                                        class="label-icon-active">
-                                </span>
-                                <span class="label-text">Branding</span>
-                            </label>
-                        </div>
-                        <div class="purpose-radio">
-                            <input type="radio" name="purpose" id="mobile-design" class="purpose-radio-input"
-                                value="Moile Design">
-                            <label for="mobile-design" class="purpose-radio-label">
-                                <span class="label-icon">
-                                    <img src="assets/images/icon_mobile_design.svg" alt="branding"
-                                        class="label-icon-default">
-                                    <img src="assets/images/icon_mobile_design_green.svg" alt="branding"
-                                        class="label-icon-active">
-                                </span>
-                                <span class="label-text">Moile Design</span>
-                            </label>
-                        </div>
-                        <div class="purpose-radio">
-                            <input type="radio" name="purpose" id="web-design" class="purpose-radio-input"
-                                value="Web Design">
-                            <label for="web-design" class="purpose-radio-label">
-                                <span class="label-icon">
-                                    <img src="assets/images/icon_web_design.svg" alt="branding" class="label-icon-default">
-                                    <img src="assets/images/icon_web_design_green.svg" alt="branding"
-                                        class="label-icon-active">
-                                </span>
-                                <span class="label-text">Web Design</span>
-                            </label>
-                        </div>
+                    <h2 class="section-heading">Select Shop </h2>
+                    <p>All existing shops are listed down here orderd by date. Please select a shop in order to continue
+                        adding a product and it is package to it.</p>
+                    <div class="form-group purpose-radios-wrapper">
+                        <select name="shops_selection" id="shops_selection" class="form-control form-control-lg w-75">
+                            @foreach ($shops as $shop)
+                                <option value="{{ $shop->id }}">{{ $shop->name }}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </section>
-                <h3>Step 2 Title</h3>
+                <h3></h3>
                 <section>
                     <h5 class="bd-wizard-step-title">Step 2</h5>
-                    <h2 class="section-heading">Enter your Account Details</h2>
-                    <div class="form-group">
-                        <label for="firstName" class="sr-only">First Name</label>
-                        <input type="text" name="firstName" id="firstName" class="form-control" placeholder="First Name">
-                    </div>
-                    <div class="form-group">
-                        <label for="lastName" class="sr-only">Last Name</label>
-                        <input type="text" name="lastName" id="lastName" class="form-control" placeholder="Last Name">
-                    </div>
-                    <div class="form-group">
-                        <label for="phoneNumber" class="sr-only">Phone Number</label>
-                        <input type="text" name="phoneNumber" id="phoneNumber" class="form-control"
-                            placeholder="Phone Number">
-                    </div>
-                    <div class="form-group">
-                        <label for="emailAddress" class="sr-only">Email Address</label>
-                        <input type="email" name="emailAddress" id="emailAddress" class="form-control"
-                            placeholder="Email Address">
+                    <h2 class="section-heading">Select Product </h2>
+                    <p>All existing products are listed down here orderd by date. Please select a product in order to
+                        continue adding a product and it is package to selected shop.</p>
+                    <div class="form-group purpose-radios-wrapper">
+                        <select name="product_selection" id="product_selection" class="form-control form-control-lg w-75">
+                            @foreach ($products as $product)
+                                <option value="{{ $product->id }}">{{ $product->name }}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </section>
-                <h3>Step 3 Title</h3>
+                <h3></h3>
                 <section>
-                    <h5 class="bd-wizard-step-title">Step 3</h5>
-                    <h2 class="section-heading mb-5">Review your Details and Submit</h2>
-                    <h6 class="font-weight-bold">Select business type</h6>
-                    <p class="mb-4" id="business-type">Branding</p>
-                    <h6 class="font-weight-bold">Enter your Account Details</h6>
-                    <p class="mb-4"><span id="enteredFirstName">Cha</span> <span id="enteredLastName">Ji-Hun
-                            C</span> <br>
-                        Phone: <span id="enteredPhoneNumber">+230-582-6609</span> <br>
-                        Email: <span id="enteredEmailAddress">willms_abby@gmail.com</span></p>
+                    <h5 class="bd-wizard-step-title">Step 2</h5>
+                    <h2 class="section-heading">Select Package </h2>
+                    <p>All available packages are listed down here based on the products quantity. Please select a package
+                        in order to add it to the selected shop.</p>
+                    <div class="form-group purpose-radios-wrapper">
+                        <div id="package_alert_box">
 
+                        </div>
+                        <select name="package_selection" id="package_selection" class="form-control form-control-lg">
+                            @foreach ($packages as $package)
+                                <option value="{{ $package->id }}">{{ $package->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <table class="table table-bordered" id="table_sizes">
+                        @if (count($packages) > 0)
+                            <thead>
+                                @foreach ($packages[0]->sizes as $size)
+                                    <th>{{ $size->name }}</th>
+                                @endforeach
+                            </thead>
+                            <tbody>
+                                @foreach ($packages[0]->sizes as $size)
+                                    <th>{{ $size->pivot->quantity }}</th>
+                                @endforeach
+                            </tbody>
+
+                        @endif
+                    </table>
                 </section>
             </div>
+            <div class="wizard vertical">
+            <table class="table table-bordered mt-5" id="table_shop_details" @if (count($shop_packages) == 0) style="visibility: hidden" @endif>
+                @if (count($shops) > 0)
+                <thead>
+                    <tr>
+                        <th colspan="3"  id="table_shop_details_name" class="text-center">{{ $shops[0]->name }}</th>
+                    </tr>
+                    <tr>
+                        <th>Products</th>
+                        <th>Packages</th>
+                        <th>Package Quantity</th>
+                    </tr>
+                </thead>
+                <tbody id="table_shop_details_body">
+                    @foreach ($shop_packages as $shop_package)
+                        <tr>
+                            <td>{{ $shop_package->product_name }}</td>
+                            <td>{{ $shop_package->package_name }}</td>
+                            <td>{{ $shop_package->total_packages }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+                @endif
+            </table>
+        </div>
         </div>
     </main>
     </section>
@@ -103,5 +105,28 @@
 @endsection
 
 @section('script')
+    <script>
+        var packages = {!! json_encode($packages->toArray()) !!};
 
+        function showPackageAlert(message) {
+            let alert = '<div class="alert alert-warning alert-dismissible fade show" role="alert">\
+             <span id="package_alert_box_message">' + message + '</span>\
+             <button type="button" class="close" data-dismiss="alert" aria-label="Close">\
+                 <span aria-hidden="true">&times;</span>\
+             </button>\
+             </div>'
+            $('#package_alert_box').html(alert);
+            $("#package_selection").css("visibility", "hidden");
+        }
+
+        function removePackageAlert() {
+            $('#package_alert_box').html('');
+            $("#package_selection").css("visibility", "visible");
+        }
+
+        @if (count($packages) == 0)
+            showPackageAlert('No package is available for the selected product.');
+        @endif
+    </script>
+    <script src="{{ asset('js/dashboard.js') }}"></script>
 @endsection

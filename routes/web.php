@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('shop_packages');
-});
+Route::get('/', [DashboardController::class, 'index'])->name('index');
+Route::get('/product/{product_id}/available-packages', [DashboardController::class, 'availablePackages'])->name('product.available_pakcages');
+Route::get('/shop-details/{shop_id}/', [DashboardController::class, 'shopAllProductPackages'])->name('shop.details');
+Route::post('shop/package', [DashboardController::class, 'store'])->name('shop.package.store');
