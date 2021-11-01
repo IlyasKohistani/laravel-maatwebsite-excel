@@ -91,7 +91,7 @@ class DashboardController extends Controller
             $package = Package::find($request->package_id);
 
             //get result that will be after subtracting this package from the product sizes
-            $subtracted_results = PackagesHelper::getSubtracPackageFromProduct($request->product_id, $request->package_id);
+            $subtracted_results = PackagesHelper::getSubtractPackageFromProduct($request->product_id, $request->package_id);
             $product_quantity_result = [];
 
             //update product quantity left in the store

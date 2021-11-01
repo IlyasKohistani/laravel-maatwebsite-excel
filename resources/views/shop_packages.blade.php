@@ -77,7 +77,7 @@
                 @if (count($shops) > 0)
                 <thead>
                     <tr>
-                        <th colspan="3"  id="table_shop_details_name" class="text-center">{{ $shops[0]->name }}</th>
+                        <th colspan="3"  id="table_shop_details_name" class="text-center">{{ $shops[0]->name }}  <a href="{{ route('export.shop_details', ['shop_id' => $shops[0]->id]) }}" class="float-right text-success"  data-toggle="tooltip"  data-placement="top" title="Download Detailed Excel File"><i class="bi bi-file-earmark-excel-fill"></i></a></th>
                     </tr>
                     <tr>
                         <th>Products</th>
@@ -106,26 +106,9 @@
 
 @section('script')
     <script>
-        var packages = {!! json_encode($packages->toArray()) !!};
-
-        function showPackageAlert(message) {
-            let alert = '<div class="alert alert-warning alert-dismissible fade show" role="alert">\
-             <span id="package_alert_box_message">' + message + '</span>\
-             <button type="button" class="close" data-dismiss="alert" aria-label="Close">\
-                 <span aria-hidden="true">&times;</span>\
-             </button>\
-             </div>'
-            $('#package_alert_box').html(alert);
-            $("#package_selection").css("visibility", "hidden");
-        }
-
-        function removePackageAlert() {
-            $('#package_alert_box').html('');
-            $("#package_selection").css("visibility", "visible");
-        }
-
+         config.packages = {!! json_encode($packages->toArray()) !!};
         @if (count($packages) == 0)
-            showPackageAlert('No package is available for the selected product.');
+            config.func.packageBox.show('No package is available for the selected product.');
         @endif
     </script>
     <script src="{{ asset('js/dashboard.js') }}"></script>

@@ -7,18 +7,18 @@ $('a[href="#finish"]').click(submitForm);
 function updateProductPackages(e) {
     let product_id = e.target.value;
     $.ajax({
-        url: 'http://127.0.0.1:8000/product/' + product_id + '/available-packages',
+        url: config.routes.product_available_packages.replace(':ID',product_id),
         type: 'GET',
         data: {
             'product_id': product_id
         },
         dataType: 'json',
         success: function (data) {
-            window.packages = data;
+            config.packages = data;
             setPackagesItems(data)
         },
         error: function (request, error) {
-            errorMessage(request.responseJSON.message ? request.responseJSON.message : null);
+            config.messages.error(request.responseJSON.message ? request.responseJSON.message : null);
         }
     });
 }
@@ -31,22 +31,22 @@ function shopChangeListener(e) {
 
 function getShopDetails(shop_id, shop_name = false) {
     $.ajax({
-        url: 'http://127.0.0.1:8000/shop-details/' + shop_id,
+        url: config.routes.shop_details.replace(':ID',shop_id),
         type: 'GET',
         dataType: 'json',
         success: function (data) {
             if (shop_name != false)
-                updateShopDetailsTable(data, shop_name);
+                updateShopDetailsTable(data, shop_name, shop_id);
             return data;
         },
         error: function (request, error) {
-            errorMessage(request.responseJSON.message ? request.responseJSON.message : null);
+            config.messages.error(request.responseJSON.message ? request.responseJSON.message : null);
             return null;
         }
     });
 }
 
-function updateShopDetailsTable(data, shop_name) {
+function updateShopDetailsTable(data, shop_name,shop_id) {
     let body = '';
     data.forEach(element => {
         body += '<tr>\
@@ -56,11 +56,13 @@ function updateShopDetailsTable(data, shop_name) {
         </tr>';
     });
     $('#table_shop_details_body').html(body)
-    $('#table_shop_details_name').html(shop_name)
+    $('#table_shop_details_name').html(shop_name+' <a  data-toggle="tooltip"  data-placement="top" title="Download Detailed Excel File" href="'+config.routes.exports.shop_details.replace(':ID',shop_id)+'" class="float-right text-success"><i class="bi bi-file-earmark-excel-fill"></i></a>')
     if (data.length == 0)
         $('#table_shop_details').css('visibility', 'hidden')
     else
         $('#table_shop_details').css('visibility', 'visible')
+        
+    $('[data-toggle="tooltip"]').tooltip()
 
 }
 
@@ -73,8 +75,8 @@ function updatePackageSizesTable(e, packages) {
 
 function setPackagesItems(packages) {
     if (packages.length == 0)
-        showPackageAlert('No package is available for the selected product.');
-    else removePackageAlert();
+    config.func.packageBox.show('No package is available for the selected product.');
+    else config.func.packageBox.hide();
     $('#package_selection').html('');
     $('#table_sizes').html('');
     let packages_options = '';
@@ -89,13 +91,13 @@ function setPackagesItems(packages) {
 
 function setPackageSizes(sizes) {
     $('#table_sizes').html('');
-    head = '<head><tr>';
+    head = '<thead><tr>';
     body = '<tbody><tr>';
     sizes.forEach(size => {
         head += '<th>' + size["name"] + '</th>';
         body += '<td>' + size["pivot"]['quantity'] + '</td>';
     });
-    head += '</head></tr>';
+    head += '</thead></tr>';
     body += '</tbody></tr>';
 
     $('#table_sizes').html(head + body);
@@ -115,55 +117,35 @@ function submitForm() {
     }
 
     if (!shop.val()) {
-        errorMessage('You must select a shop.')
+        
+        config.messages.error('You must select a shop.')
         return false;
     };
     if (!product.val()) {
-        errorMessage('You must select a product.')
+        config.messages.error('You must select a product.')
         return false;
     };
     if (!package.val()) {
-        errorMessage('You must select a package.')
+        config.messages.error('You must select a package.')
         return false;
     };
 
     data["_token"] = $('meta[name="csrf-token"]').attr('content')
 
     $.ajax({
-        url: 'http://127.0.0.1:8000/shop/package',
+        url: config.routes.package_store,
         type: 'POST',
         data: data,
         dataType: 'json',
         success: function (data) {
-            window.packages = data;
+            config.packages = data;
             setPackagesItems(data)
             getShopDetails(shop.val(), shop.children(":selected").text())
-            successMessage();
+            config.messages.success();
         },
         error: function (request, error) {
-            errorMessage(request.responseJSON.message ? request.responseJSON.message : null);
+            config.messages.error(request.responseJSON.message ? request.responseJSON.message : null);
         }
     });
-}
-
-
-function successMessage(message = 'Package added successfully.') {
-    Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        text: message,
-        showConfirmButton: false,
-        timer: 1500
-    })
-}
-
-function errorMessage(message = 'The transaction could not be completed.') {
-    Swal.fire({
-        position: 'top-end',
-        icon: 'error',
-        text: message,
-        showConfirmButton: false,
-        timer: 1500
-    })
 }
 
