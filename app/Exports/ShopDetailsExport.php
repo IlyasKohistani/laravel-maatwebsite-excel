@@ -8,9 +8,10 @@ use App\Models\Size;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\WithStrictNullComparison;
 use Maatwebsite\Excel\Concerns\WithTitle;
 
-class ShopDetailsExport implements FromCollection, WithTitle, WithHeadings
+class ShopDetailsExport implements FromCollection, WithTitle, WithHeadings, WithStrictNullComparison
 {
     protected $shop_id;
 

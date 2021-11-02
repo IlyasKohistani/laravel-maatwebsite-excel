@@ -8,7 +8,7 @@
 
 @section('content')
 
-    <main class="d-flex align-items-center">
+    <main class="d-flex align-items-center pt-5">
         <div class="container">
             <div id="wizard">
                 <h3></h3>
@@ -99,7 +99,6 @@
         </div>
         </div>
     </main>
-    </section>
 
 
 @endsection

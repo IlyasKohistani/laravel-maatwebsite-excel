@@ -10,36 +10,48 @@
 <!-- global app configuration object -->
 <script>
     var config = {
-        packages:[],
+        packages: [],
         routes: {
-            index: "{{ route('index') }}",
+            index: "{{ route('dashboard') }}",
             product_available_packages: "{{ route('product.available_pakcages', ['product_id' => ':ID']) }}",
             shop_details: "{{ route('shop.details', ['shop_id' => ':ID']) }}",
             package_store: "{{ route('shop.package.store') }}",
             exports: {
-                product_sample: "{{ route('export.product_sample') }}",
+                product_sample: "{{ route('export.all',['type'=>'Product_Template']) }}",
                 shop_details: "{{ route('export.shop_details', ['shop_id' => ':ID']) }}",
             },
             imports: {
+                upload: "{{ route('import.upload') }}",
+            }
+        },
+        loader: {
+            hide: function() {
+                document.getElementById('loader-container').classList.add('d-none');
+            },
+            show: function() {
+                document.getElementById('loader-container').classList.remove('d-none');
+            },
+            toggle: function() {
+                $('#loader-container').toggleClass('d-none')
             }
         },
         messages: {
-            success: function(message = 'Package added successfully.') {
+            success: function(message = 'Package added successfully.', delay = 2000) {
                 Swal.fire({
                     position: 'top-end',
                     icon: 'success',
                     text: message,
                     showConfirmButton: false,
-                    timer: 1500
+                    timer: delay
                 })
             },
-            error: function(message = 'The transaction could not be completed.') {
+            error: function(message = 'The transaction could not be completed.', delay = 2500) {
                 Swal.fire({
                     position: 'top-end',
                     icon: 'error',
                     text: message,
                     showConfirmButton: false,
-                    timer: 1500
+                    timer: delay
                 })
             }
 
@@ -60,9 +72,20 @@
                     $('#package_alert_box').html('');
                     $("#package_selection").css("visibility", "visible");
                 }
-            }
+            },
+            customError: function(response) {
+                let errors = response.responseJSON.errors;
+                if (errors && typeof errors === 'object')
+                    for (const key in errors) {
+                        return errors[key][0];
+                    }
+
+                return response.responseJSON.message ? response.responseJSON.message : null;
+            },
         },
+
     };
+
     $('[data-toggle="tooltip"]').tooltip()
 </script>
 

@@ -1,6 +1,6 @@
 $('#shops_selection').change(shopChangeListener);
 $('#product_selection').change(updateProductPackages);
-$('#package_selection').change((e) => { updatePackageSizesTable(e, packages) });
+$('#package_selection').change((e) => { updatePackageSizesTable(e, config.packages) });
 $('a[href="#finish"]').click(submitForm);
 
 

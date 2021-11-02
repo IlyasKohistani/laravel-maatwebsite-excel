@@ -2,35 +2,21 @@
 
 namespace App\Exports;
 
-use App\Models\Branch;
-use App\Models\Department;
-use App\Models\Position;
-use App\Models\Region;
 use App\Models\Size;
-use App\Models\Title;
-use App\Models\Store;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithTitle;
 use Maatwebsite\Excel\Events\AfterSheet;
-use PhpOffice\PhpSpreadsheet\Cell\DataValidation;
 
-class ProductsSampleExport implements FromCollection, WithTitle, WithHeadings, WithEvents
+class ProductTemplateExport implements FromCollection, WithTitle, WithHeadings, WithEvents
 {
-    // protected $companyId;
-
-    // public function __construct($companyId)
-    // {
-    //     $this->companyId = $companyId;
-    // }
-
     /**
      * @return string
      */
     public function title(): string
     {
-        return 'ProductSample';
+        return 'ProductTemplate';
     }
 
     public function headings(): array
@@ -38,10 +24,10 @@ class ProductsSampleExport implements FromCollection, WithTitle, WithHeadings, W
         $sizes = Size::all()->pluck('name')->toArray();
         return array_merge([
             'SKU',
-            'Title',
+            'Name',
             'Article Code',
             'Total In Stock',
-        ],$sizes);
+        ], $sizes);
     }
 
     public function collection()
