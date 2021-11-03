@@ -1,6 +1,6 @@
 @extends('main')
 
-@section('title', 'Shop Packages')
+@section('title', 'Imports')
 @section('style')
 <link rel="stylesheet" href="{{ asset('css/drag-drop.css') }}">
 @endsection

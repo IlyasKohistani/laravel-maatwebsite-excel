@@ -6,6 +6,7 @@ use App\Helpers\PackagesHelper;
 use App\Models\Package;
 use App\Models\Product;
 use App\Models\Shop;
+use App\Models\Size;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
@@ -17,16 +18,20 @@ class DashboardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+
+        if (!Size::all()->count())
+            session()->now('popupMessage', 'No data available at the moment.');
+
+
         $shops = Shop::select(['id', 'name'])->get();
         $products = Product::select(['id', 'article_code', 'name'])->get();
-        $packages = [];
-        $shop_packages = [];
         if (count($products) > 0) $packages =  $this->availablePackages($products[0]['id']);
         if (count($shops) > 0) $shop_packages =   $this->shopAllProductPackages(1);
 
-        return view('shop_packages', ['shops' => $shops, 'products' => $products, 'packages' => $packages, 'shop_packages' => $shop_packages]);
+
+        return view('layouts.shop_packages', ['shops' => $shops, 'products' => $products, 'packages' => $packages ?? [], 'shop_packages' => $shop_packages ?? []]);
     }
 
     /**
@@ -42,7 +47,7 @@ class DashboardController extends Controller
     }
 
 
-     /**
+    /**
      * Show all product with packages for specific shop.
      *
      * @return \Illuminate\Http\Response
@@ -51,15 +56,13 @@ class DashboardController extends Controller
     {
         Shop::findOrFail($shop_id);
         return DB::table('package_shop as ps')
-                                ->join('packages as pa', 'ps.package_id','=','pa.id')
-                                ->join('products as pr', 'ps.product_id','=','pr.id')
-                                ->select(['pa.name as package_name','pr.name as product_name',DB::raw('count(*) as total_packages')])
-                                ->where('ps.shop_id',$shop_id)
-                                ->groupBy('package_name')
-                                ->groupBy('product_name')
-                                ->get();
-        
-
+            ->join('packages as pa', 'ps.package_id', '=', 'pa.id')
+            ->join('products as pr', 'ps.product_id', '=', 'pr.id')
+            ->select(['pa.name as package_name', 'pr.name as product_name', DB::raw('count(*) as total_packages')])
+            ->where('ps.shop_id', $shop_id)
+            ->groupBy('package_name')
+            ->groupBy('product_name')
+            ->get();
     }
 
     /**

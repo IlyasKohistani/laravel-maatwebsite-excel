@@ -3,8 +3,7 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.9/dist/sweetalert2.all.min.js"></script>
-
-
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 
 <!-- global app configuration object -->
@@ -53,6 +52,15 @@
                     showConfirmButton: false,
                     timer: delay
                 })
+            },
+            info: function(message, delay = 1500) {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'info',
+                    text: message,
+                    showConfirmButton: false,
+                    timer: delay
+                })
             }
 
         },
@@ -87,9 +95,12 @@
     };
 
     $('[data-toggle="tooltip"]').tooltip()
+
+    @if (\Session::has('popupMessage'))
+        config.messages.info("{!! \Session::get('popupMessage') !!}");
+    @endif
 </script>
 
 <!-- Custom Scripts  -->
 <script src="{{ asset('js/jquery.steps.min.js') }}"></script>
-<script src="{{ asset('js/bd-wizard.js') }}"></script>
 <script src="{{ asset('app.js') }}"></script>

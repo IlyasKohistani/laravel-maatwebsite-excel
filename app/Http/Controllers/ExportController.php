@@ -7,6 +7,7 @@ use App\Exports\ProductTemplateExport;
 use App\Exports\ShopDetailsExport;
 use App\Exports\ShopTemplateExport;
 use App\Models\Shop;
+use App\Models\Size;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -21,6 +22,8 @@ class ExportController extends Controller
      */
     public function export(Request $request)
     {
+        $sizes_available = Size::all()->count();
+        if(!$sizes_available) return Redirect()->back()->with(['popupMessage' => 'No data available at the moment.']);;
         switch ($request->type) {
             case 'All_Shop_Details':
                 return Excel::download(new ShopDetailsExport('ALL'), 'all_shop_details.xlsx');
