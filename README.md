@@ -1,4 +1,8 @@
-requirement: "php": "^7.1 || ^8.0", MYSQL  8.0.11 , LARAVEL FRAMEWORK 8 , COMPOSER 2.1.9.
+requirement: "php": "^7.1 || ^8.0", MYSQL  8.0.11 , LARAVEL FRAMEWORK 8 , COMPOSER 2.1.9, GIT 2.33.1.windows.1
+
+
+TO CLONE PROJECT YOU SHOULD USE THIS COMMAND
+git clone https://github.com/IlyasKohistani/ShopPackage.git,
 
 DATABASE-INFO: {
 DB_CONNECTION=mysql
