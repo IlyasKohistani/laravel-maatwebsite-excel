@@ -24,6 +24,7 @@ composer update
 copy .env.example .env  
 php artisan project:init
 
+php artisan serve
 RUN THIS COMMAND IN DIFFERENT TERMINAL AND DON'T CLOSE THE CURRENT TERMINAL
 start chrome 127.0.0.1:8000  
 
