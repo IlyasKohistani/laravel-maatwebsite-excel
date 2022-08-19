@@ -46,7 +46,7 @@ class ImportController extends Controller
         } catch (ValidationException $e) {
             $failure = $e->failures()[0];
             $message =  $failure->errors()[0] . ' On row number ' . $failure->row() . '.';
-            return Response(['message'=>$message], 422);
+            return Response(['message' => $message], 422);
         }
     }
 }
