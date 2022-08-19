@@ -1,10 +1,10 @@
 # Shop Packages Maatwebsite/excel
 
-[![GitHub Stars](https://img.shields.io/github/stars/IlyasKohistani/laravel-maatwebsite-excel.svg)](https://github.com/IlyasKohistani/laravel-maatwebsite-excel/stargazers) [![GitHub Issues](https://img.shields.io/github/issues/IlyasKohistani/laravel-maatwebsite-excel.svg)](https://github.com/IlyasKohistani/laravel-maatwebsite-excel/issues) [![Current Version](https://img.shields.io/badge/version-1.0.0-green.svg)](https://github.com/IlyasKohistani/laravel-maatwebsite-excel) [![Live Demo](https://img.shields.io/badge/demo-online-green.svg)](https://ilyaskohistani.github.io/projects/css_grid/)
+[![GitHub Stars](https://img.shields.io/github/stars/IlyasKohistani/laravel-maatwebsite-excel.svg)](https://github.com/IlyasKohistani/laravel-maatwebsite-excel/stargazers) [![GitHub Issues](https://img.shields.io/github/issues/IlyasKohistani/laravel-maatwebsite-excel.svg)](https://github.com/IlyasKohistani/laravel-maatwebsite-excel/issues) [![Current Version](https://img.shields.io/badge/version-1.0.0-green.svg)](https://github.com/IlyasKohistani/laravel-maatwebsite-excel) [![Live Demo](https://img.shields.io/badge/demo-online-green.svg)](https://shop-packages.000webhostapp.com/)
 
 A complete project built with Laravel and Maatwebsite/Excel package. A simple package distirbution to the shops based on product quantity in each package. A good example of using [Laravel Maatwebsite/excel package](https://laravel-excel.com/) imports, exports, validations and much more. You are 100% allowed to use this webpage for both personal and commercial use, but NOT to claim it as your own.
 
-![Snapshot](https://github.com/IlyasKohistani/laravel-maatwebsite-excel/tree/main/public/img/snapshot.png)
+![Snapshot](https://github.com/IlyasKohistani/laravel-maatwebsite-excel/blob/main/public/img/snapshot.png)
 
 ---
 
